@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<script src="angular.js"></script>
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+<body>
+
+<div ng-app='myapp' ng-controller='cntrl' class="w3-card-2 w3-margin" style="max-width:400px;padding:20px;">
+  <input ng-model="addy" />
+  <button ng-click="add()" class="w3-btn w3-padding w3-blue">Add
+  </button>
+  <span ng-show='span' style='color:red'>The TeXt Is AlReAdY In ThE LiSt
+  </span>
+  <ul class="w3-ul">
+    <li ng-repeat="x in names" class="w3-padding-hor-16">
+      <span ng-click="expand($index)">~{{x}}
+        <ul ng-show='(show === $index && count<2)'>
+          <li ng-repeat="Y in features[$index]">{{Y}}
+          </li>
+        </ul>
+      </span>
+    </li>
+  </ul>
+</div>
+<script>
+  var app = angular.module('myapp',[]);
+  app.controller('cntrl', function($scope){
+    $scope.names = ['Fruits', 'Veggies', 'Cars'];
+    $scope.show = false ;
+    $scope.count = 0;
+    $scope.features = [['Apple','Mango','Lemon','Grapes'], ['Tomato', 'Carrot', 'Cucumber'], ['Porsche', 'Aston', 'Dodge']];
+    $scope.expand = function(i){
+      if($scope.show === i && $scope.count < 2)
+        $scope.count++;
+      else
+        $scope.count = 1;
+      $scope.show = i;
+    }
+    $scope.add = function(){
+      $scope.span = false
+      if($scope.names.indexOf($scope.addy) === -1)
+        $scope.names.push($scope.addy);
+      else{
+        $scope.span = true;
+      }
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<html>
+	<head>
+		<script src='angular.js'></script>
+		<title>AngularJS</title>
+		<style>
+		input{
+				margin:10px;float:right
+			}
+		</style>
+	</head>
+	<body ng-app="app" ng-controller="ctrl">
+		<div>
+			Name: <input type='text' style="background-color:{{text}}" ng-model='text'>
+			{{text}}</br>
+			Birth year :<input type="number" ng-model="date" ng-change="yearchange()" ng-model-options="{debounce:1000}"/></br>
+			Your current age: <input type='text' ng-model="age" /></br>
+			Subject: <input type='text' ng-model='subject'></br>
+			Marks: <input type='number' ng-model='markss' ng-keydown="$event.which === 13 && markchange()"></br>
+			<table>
+				<tr ng-repeat="mark in marks">
+					<td>{{mark.subject}}</td>
+					<td>{{mark.marks}}</td>
+				</tr>
+			</table>
+		</div>
+		<script>
+		var app = angular.module('app', []);
+		app.controller('ctrl', function($scope){
+			$scope.curdate = new Date().getFullYear();
+			$scope.marks = [ {'subject':'Maths', 'marks': '92'}, {'subject':'Chemistry', 'marks':'82'} ];
+			$scope.yearchange = function(){
+				$scope.age = $scope.curdate - $scope.date;
+			}
+			$scope.markchange = function(){
+				$scope.marks.push({'subject': $scope.subject, 'marks': $scope.markss});
+			}
+		})
+		</script>
+	</body>
+</html>
